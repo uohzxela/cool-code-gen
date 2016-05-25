@@ -41,8 +41,8 @@ abstract class Class_ extends TreeNode {
 
 
 /** Defines list phylum Classes
-    <p>
-    See <a href="ListNode.html">ListNode</a> for full documentation. */
+  <p>
+  See <a href="ListNode.html">ListNode</a> for full documentation. */
 class Classes extends ListNode {
     public final static Class elementClass = Class_.class;
     /** Returns class of this lists's elements */
@@ -78,8 +78,8 @@ abstract class Feature extends TreeNode {
 
 
 /** Defines list phylum Features
-    <p>
-    See <a href="ListNode.html">ListNode</a> for full documentation. */
+  <p>
+  See <a href="ListNode.html">ListNode</a> for full documentation. */
 class Features extends ListNode {
     public final static Class elementClass = Feature.class;
     /** Returns class of this lists's elements */
@@ -115,8 +115,8 @@ abstract class Formal extends TreeNode {
 
 
 /** Defines list phylum Formals
-    <p>
-    See <a href="ListNode.html">ListNode</a> for full documentation. */
+  <p>
+  See <a href="ListNode.html">ListNode</a> for full documentation. */
 class Formals extends ListNode {
     public final static Class elementClass = Formal.class;
     /** Returns class of this lists's elements */
@@ -152,21 +152,21 @@ abstract class Expression extends TreeNode {
     public abstract void dump_with_types(PrintStream out, int n);
     public void dump_type(PrintStream out, int n) {
         if (type != null)
-            { out.println(Utilities.pad(n) + ": " + type.getString()); }
+        { out.println(Utilities.pad(n) + ": " + type.getString()); }
         else
-            { out.println(Utilities.pad(n) + ": _no_type"); }
+        { out.println(Utilities.pad(n) + ": _no_type"); }
     }
     public abstract void code(PrintStream s);
     public abstract void code(PrintStream s, 
-                            AbstractSymbol so, 
-                            AbstractSymbol method, 
-                            CgenClassTable cTable);
+            AbstractSymbol so, 
+            AbstractSymbol method, 
+            CgenClassTable cTable);
 }
 
 
 /** Defines list phylum Expressions
-    <p>
-    See <a href="ListNode.html">ListNode</a> for full documentation. */
+  <p>
+  See <a href="ListNode.html">ListNode</a> for full documentation. */
 class Expressions extends ListNode {
     public final static Class elementClass = Expression.class;
     /** Returns class of this lists's elements */
@@ -202,8 +202,8 @@ abstract class Case extends TreeNode {
 
 
 /** Defines list phylum Cases
-    <p>
-    See <a href="ListNode.html">ListNode</a> for full documentation. */
+  <p>
+  See <a href="ListNode.html">ListNode</a> for full documentation. */
 class Cases extends ListNode {
     public final static Class elementClass = Case.class;
     /** Returns class of this lists's elements */
@@ -229,15 +229,15 @@ class Cases extends ListNode {
 
 
 /** Defines AST constructor 'program'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class program extends Program {
     public Classes classes;
     /** Creates "program" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for classes
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for classes
+     */
     public program(int lineNumber, Classes a1) {
         super(lineNumber);
         classes = a1;
@@ -250,74 +250,74 @@ class program extends Program {
         classes.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_program");
         for (Enumeration e = classes.getElements(); e.hasMoreElements(); ) {
-	    ((Class_)e.nextElement()).dump_with_types(out, n + 1);
+            ((Class_)e.nextElement()).dump_with_types(out, n + 1);
         }
     }
     /** This method is the entry point to the semantic checker.  You will
-        need to complete it in programming assignment 4.
-	<p>
-        Your checker should do the following two things:
-	<ol>
-	<li>Check that the program is semantically correct
-	<li>Decorate the abstract syntax tree with type information
-        by setting the type field in each Expression node.
-        (see tree.h)
-	</ol>
-	<p>
-	You are free to first do (1) and make sure you catch all semantic
-    	errors. Part (2) can be done in a second stage when you want
-	to test the complete compiler.
-    */
+      need to complete it in programming assignment 4.
+      <p>
+      Your checker should do the following two things:
+      <ol>
+      <li>Check that the program is semantically correct
+      <li>Decorate the abstract syntax tree with type information
+      by setting the type field in each Expression node.
+      (see tree.h)
+      </ol>
+      <p>
+      You are free to first do (1) and make sure you catch all semantic
+      errors. Part (2) can be done in a second stage when you want
+      to test the complete compiler.
+     */
     public void semant() {
-	/* ClassTable constructor may do some semantic analysis */
-	ClassTable classTable = new ClassTable(classes);
-	
-	/* some semantic analysis code may go here */
+        /* ClassTable constructor may do some semantic analysis */
+        ClassTable classTable = new ClassTable(classes);
 
-	if (classTable.errors()) {
-	    System.err.println("Compilation halted due to static semantic errors.");
-	    System.exit(1);
-	}
+        /* some semantic analysis code may go here */
+
+        if (classTable.errors()) {
+            System.err.println("Compilation halted due to static semantic errors.");
+            System.exit(1);
+        }
     }
     /** This method is the entry point to the code generator.  All of the work
-      * of the code generator takes place within CgenClassTable constructor.
-      * @param s the output stream 
-      * @see CgenClassTable
-      * */
+     * of the code generator takes place within CgenClassTable constructor.
+     * @param s the output stream 
+     * @see CgenClassTable
+     * */
     public void cgen(PrintStream s) 
     {
         // spim wants comments to start with '#'
         s.print("# start of generated code\n");
 
-	CgenClassTable codegen_classtable = new CgenClassTable(classes, s);
+        CgenClassTable codegen_classtable = new CgenClassTable(classes, s);
 
-	s.print("\n# end of generated code\n");
+        s.print("\n# end of generated code\n");
     }
 
 }
 
 
 /** Defines AST constructor 'class_'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class class_ extends Class_ {
     public AbstractSymbol name;
     public AbstractSymbol parent;
     public Features features;
     public AbstractSymbol filename;
     /** Creates "class_" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      * @param a1 initial value for parent
-      * @param a2 initial value for features
-      * @param a3 initial value for filename
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     * @param a1 initial value for parent
+     * @param a2 initial value for features
+     * @param a3 initial value for filename
+     */
     public class_(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Features a3, AbstractSymbol a4) {
         super(lineNumber);
         name = a1;
@@ -336,7 +336,7 @@ class class_ extends Class_ {
         dump_AbstractSymbol(out, n+2, filename);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_class");
@@ -346,7 +346,7 @@ class class_ extends Class_ {
         Utilities.printEscapedString(out, filename.getString());
         out.println("\"\n" + Utilities.pad(n + 2) + "(");
         for (Enumeration e = features.getElements(); e.hasMoreElements();) {
-	    ((Feature)e.nextElement()).dump_with_types(out, n + 2);
+            ((Feature)e.nextElement()).dump_with_types(out, n + 2);
         }
         out.println(Utilities.pad(n + 2) + ")");
     }
@@ -359,21 +359,21 @@ class class_ extends Class_ {
 
 
 /** Defines AST constructor 'method'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class method extends Feature {
     public AbstractSymbol name;
     public Formals formals;
     public AbstractSymbol return_type;
     public Expression expr;
     /** Creates "method" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      * @param a1 initial value for formals
-      * @param a2 initial value for return_type
-      * @param a3 initial value for expr
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     * @param a1 initial value for formals
+     * @param a2 initial value for return_type
+     * @param a3 initial value for expr
+     */
     public method(int lineNumber, AbstractSymbol a1, Formals a2, AbstractSymbol a3, Expression a4) {
         super(lineNumber);
         name = a1;
@@ -392,16 +392,16 @@ class method extends Feature {
         expr.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_method");
         dump_AbstractSymbol(out, n + 2, name);
         for (Enumeration e = formals.getElements(); e.hasMoreElements();) {
-	    ((Formal)e.nextElement()).dump_with_types(out, n + 2);
+            ((Formal)e.nextElement()).dump_with_types(out, n + 2);
         }
         dump_AbstractSymbol(out, n + 2, return_type);
-	expr.dump_with_types(out, n + 2);
+        expr.dump_with_types(out, n + 2);
     }
     public void code(PrintStream s, AbstractSymbol so, CgenClassTable cTable) {
     }
@@ -409,19 +409,19 @@ class method extends Feature {
 
 
 /** Defines AST constructor 'attr'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class attr extends Feature {
     public AbstractSymbol name;
     public AbstractSymbol type_decl;
     public Expression init;
     /** Creates "attr" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      * @param a1 initial value for type_decl
-      * @param a2 initial value for init
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     * @param a1 initial value for type_decl
+     * @param a2 initial value for init
+     */
     public attr(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3) {
         super(lineNumber);
         name = a1;
@@ -438,30 +438,30 @@ class attr extends Feature {
         init.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_attr");
         dump_AbstractSymbol(out, n + 2, name);
         dump_AbstractSymbol(out, n + 2, type_decl);
-	init.dump_with_types(out, n + 2);
+        init.dump_with_types(out, n + 2);
     }
     public AbstractSymbol getName() { return this.name; }
 }
 
 
 /** Defines AST constructor 'formal'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class formal extends Formal {
     public AbstractSymbol name;
     public AbstractSymbol type_decl;
     /** Creates "formal" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      * @param a1 initial value for type_decl
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     * @param a1 initial value for type_decl
+     */
     public formal(int lineNumber, AbstractSymbol a1, AbstractSymbol a2) {
         super(lineNumber);
         name = a1;
@@ -476,7 +476,7 @@ class formal extends Formal {
         dump_AbstractSymbol(out, n+2, type_decl);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_formal");
@@ -488,19 +488,19 @@ class formal extends Formal {
 
 
 /** Defines AST constructor 'branch'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class branch extends Case {
     public AbstractSymbol name;
     public AbstractSymbol type_decl;
     public Expression expr;
     /** Creates "branch" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      * @param a1 initial value for type_decl
-      * @param a2 initial value for expr
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     * @param a1 initial value for type_decl
+     * @param a2 initial value for expr
+     */
     public branch(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3) {
         super(lineNumber);
         name = a1;
@@ -517,30 +517,30 @@ class branch extends Case {
         expr.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_branch");
         dump_AbstractSymbol(out, n + 2, name);
         dump_AbstractSymbol(out, n + 2, type_decl);
-	expr.dump_with_types(out, n + 2);
+        expr.dump_with_types(out, n + 2);
     }
 
 }
 
 
 /** Defines AST constructor 'assign'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class assign extends Expression {
     public AbstractSymbol name;
     public Expression expr;
     /** Creates "assign" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      * @param a1 initial value for expr
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     * @param a1 initial value for expr
+     */
     public assign(int lineNumber, AbstractSymbol a1, Expression a2) {
         super(lineNumber);
         name = a1;
@@ -555,23 +555,23 @@ class assign extends Expression {
         expr.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_assign");
         dump_AbstractSymbol(out, n + 2, name);
-	expr.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        expr.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {}
     public void code(PrintStream s, Location l) {}
     public void code(PrintStream s, AbstractSymbol so, CgenClassTable cTable) {
-        
+
     }
 
 
@@ -585,21 +585,21 @@ class assign extends Expression {
 
 
 /** Defines AST constructor 'static_dispatch'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class static_dispatch extends Expression {
     public Expression expr;
     public AbstractSymbol type_name;
     public AbstractSymbol name;
     public Expressions actual;
     /** Creates "static_dispatch" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for expr
-      * @param a1 initial value for type_name
-      * @param a2 initial value for name
-      * @param a3 initial value for actual
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for expr
+     * @param a1 initial value for type_name
+     * @param a2 initial value for name
+     * @param a3 initial value for actual
+     */
     public static_dispatch(int lineNumber, Expression a1, AbstractSymbol a2, AbstractSymbol a3, Expressions a4) {
         super(lineNumber);
         expr = a1;
@@ -618,25 +618,25 @@ class static_dispatch extends Expression {
         actual.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_static_dispatch");
-	expr.dump_with_types(out, n + 2);
+        expr.dump_with_types(out, n + 2);
         dump_AbstractSymbol(out, n + 2, type_name);
         dump_AbstractSymbol(out, n + 2, name);
         out.println(Utilities.pad(n + 2) + "(");
         for (Enumeration e = actual.getElements(); e.hasMoreElements();) {
-	    ((Expression)e.nextElement()).dump_with_types(out, n + 2);
+            ((Expression)e.nextElement()).dump_with_types(out, n + 2);
         }
         out.println(Utilities.pad(n + 2) + ")");
-	dump_type(out, n);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -664,19 +664,19 @@ class static_dispatch extends Expression {
 
 
 /** Defines AST constructor 'dispatch'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class dispatch extends Expression {
     public Expression expr;
     public AbstractSymbol name;
     public Expressions actual;
     /** Creates "dispatch" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for expr
-      * @param a1 initial value for name
-      * @param a2 initial value for actual
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for expr
+     * @param a1 initial value for name
+     * @param a2 initial value for actual
+     */
     public dispatch(int lineNumber, Expression a1, AbstractSymbol a2, Expressions a3) {
         super(lineNumber);
         expr = a1;
@@ -693,24 +693,24 @@ class dispatch extends Expression {
         actual.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_dispatch");
-	expr.dump_with_types(out, n + 2);
+        expr.dump_with_types(out, n + 2);
         dump_AbstractSymbol(out, n + 2, name);
         out.println(Utilities.pad(n + 2) + "(");
         for (Enumeration e = actual.getElements(); e.hasMoreElements();) {
-	    ((Expression)e.nextElement()).dump_with_types(out, n + 2);
+            ((Expression)e.nextElement()).dump_with_types(out, n + 2);
         }
         out.println(Utilities.pad(n + 2) + ")");
-	dump_type(out, n);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -739,19 +739,19 @@ class dispatch extends Expression {
 
 
 /** Defines AST constructor 'cond'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class cond extends Expression {
     public Expression pred;
     public Expression then_exp;
     public Expression else_exp;
     /** Creates "cond" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for pred
-      * @param a1 initial value for then_exp
-      * @param a2 initial value for else_exp
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for pred
+     * @param a1 initial value for then_exp
+     * @param a2 initial value for else_exp
+     */
     public cond(int lineNumber, Expression a1, Expression a2, Expression a3) {
         super(lineNumber);
         pred = a1;
@@ -768,20 +768,20 @@ class cond extends Expression {
         else_exp.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_cond");
-	pred.dump_with_types(out, n + 2);
-	then_exp.dump_with_types(out, n + 2);
-	else_exp.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        pred.dump_with_types(out, n + 2);
+        then_exp.dump_with_types(out, n + 2);
+        else_exp.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -802,17 +802,17 @@ class cond extends Expression {
 
 
 /** Defines AST constructor 'loop'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class loop extends Expression {
     public Expression pred;
     public Expression body;
     /** Creates "loop" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for pred
-      * @param a1 initial value for body
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for pred
+     * @param a1 initial value for body
+     */
     public loop(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         pred = a1;
@@ -827,19 +827,19 @@ class loop extends Expression {
         body.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_loop");
-	pred.dump_with_types(out, n + 2);
-	body.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        pred.dump_with_types(out, n + 2);
+        body.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -860,17 +860,17 @@ class loop extends Expression {
 
 
 /** Defines AST constructor 'typcase'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class typcase extends Expression {
     public Expression expr;
     public Cases cases;
     /** Creates "typcase" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for expr
-      * @param a1 initial value for cases
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for expr
+     * @param a1 initial value for cases
+     */
     public typcase(int lineNumber, Expression a1, Cases a2) {
         super(lineNumber);
         expr = a1;
@@ -885,21 +885,21 @@ class typcase extends Expression {
         cases.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_typcase");
-	expr.dump_with_types(out, n + 2);
+        expr.dump_with_types(out, n + 2);
         for (Enumeration e = cases.getElements(); e.hasMoreElements();) {
-	    ((Case)e.nextElement()).dump_with_types(out, n + 2);
+            ((Case)e.nextElement()).dump_with_types(out, n + 2);
         }
-	dump_type(out, n);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -935,15 +935,15 @@ class typcase extends Expression {
 
 
 /** Defines AST constructor 'block'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class block extends Expression {
     public Expressions body;
     /** Creates "block" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for body
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for body
+     */
     public block(int lineNumber, Expressions a1) {
         super(lineNumber);
         body = a1;
@@ -956,20 +956,20 @@ class block extends Expression {
         body.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_block");
         for (Enumeration e = body.getElements(); e.hasMoreElements();) {
-	    ((Expression)e.nextElement()).dump_with_types(out, n + 2);
+            ((Expression)e.nextElement()).dump_with_types(out, n + 2);
         }
-	dump_type(out, n);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -984,21 +984,21 @@ class block extends Expression {
 
 
 /** Defines AST constructor 'let'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class let extends Expression {
     public AbstractSymbol identifier;
     public AbstractSymbol type_decl;
     public Expression init;
     public Expression body;
     /** Creates "let" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for identifier
-      * @param a1 initial value for type_decl
-      * @param a2 initial value for init
-      * @param a3 initial value for body
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for identifier
+     * @param a1 initial value for type_decl
+     * @param a2 initial value for init
+     * @param a3 initial value for body
+     */
     public let(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3, Expression a4) {
         super(lineNumber);
         identifier = a1;
@@ -1017,21 +1017,21 @@ class let extends Expression {
         body.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_let");
-	dump_AbstractSymbol(out, n + 2, identifier);
-	dump_AbstractSymbol(out, n + 2, type_decl);
-	init.dump_with_types(out, n + 2);
-	body.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        dump_AbstractSymbol(out, n + 2, identifier);
+        dump_AbstractSymbol(out, n + 2, type_decl);
+        init.dump_with_types(out, n + 2);
+        body.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1053,17 +1053,17 @@ class let extends Expression {
 
 
 /** Defines AST constructor 'plus'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class plus extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "plus" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public plus(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1078,19 +1078,19 @@ class plus extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_plus");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1102,17 +1102,17 @@ class plus extends Expression {
 
 
 /** Defines AST constructor 'sub'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class sub extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "sub" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public sub(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1127,19 +1127,19 @@ class sub extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_sub");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1151,17 +1151,17 @@ class sub extends Expression {
 
 
 /** Defines AST constructor 'mul'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class mul extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "mul" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public mul(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1176,19 +1176,19 @@ class mul extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_mul");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1200,17 +1200,17 @@ class mul extends Expression {
 
 
 /** Defines AST constructor 'divide'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class divide extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "divide" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public divide(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1225,19 +1225,19 @@ class divide extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_divide");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1249,15 +1249,15 @@ class divide extends Expression {
 
 
 /** Defines AST constructor 'neg'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class neg extends Expression {
     public Expression e1;
     /** Creates "neg" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     */
     public neg(int lineNumber, Expression a1) {
         super(lineNumber);
         e1 = a1;
@@ -1270,18 +1270,18 @@ class neg extends Expression {
         e1.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_neg");
-	e1.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1297,17 +1297,17 @@ class neg extends Expression {
 
 
 /** Defines AST constructor 'lt'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class lt extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "lt" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public lt(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1322,19 +1322,19 @@ class lt extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_lt");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1356,17 +1356,17 @@ class lt extends Expression {
 
 
 /** Defines AST constructor 'eq'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class eq extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "eq" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public eq(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1381,19 +1381,19 @@ class eq extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_eq");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1411,23 +1411,23 @@ class eq extends Expression {
         CgenSupport.emitPartialLoadAddress(CgenSupport.A1, s); (new BoolConst(false)).codeRef(s); s.println();
         CgenSupport.emitJal("equality_test", s);
         CgenSupport.emitLabelDef(nextLabel, s);
-       
+
     }
 }
 
 
 /** Defines AST constructor 'leq'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class leq extends Expression {
     public Expression e1;
     public Expression e2;
     /** Creates "leq" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      * @param a1 initial value for e2
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     * @param a1 initial value for e2
+     */
     public leq(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
         e1 = a1;
@@ -1442,19 +1442,19 @@ class leq extends Expression {
         e2.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_leq");
-	e1.dump_with_types(out, n + 2);
-	e2.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        e2.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1476,15 +1476,15 @@ class leq extends Expression {
 
 
 /** Defines AST constructor 'comp'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class comp extends Expression {
     public Expression e1;
     /** Creates "comp" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     */
     public comp(int lineNumber, Expression a1) {
         super(lineNumber);
         e1 = a1;
@@ -1497,18 +1497,18 @@ class comp extends Expression {
         e1.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_comp");
-	e1.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1521,21 +1521,21 @@ class comp extends Expression {
         CgenSupport.emitBeqz(CgenSupport.T1, nextLabel, s);
         cTable.emitLoadAccFalse();
         CgenSupport.emitLabelDef(nextLabel, s);
-        
+
     }
 }
 
 
 /** Defines AST constructor 'int_const'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class int_const extends Expression {
     public AbstractSymbol token;
     /** Creates "int_const" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for token
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for token
+     */
     public int_const(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);
         token = a1;
@@ -1548,20 +1548,20 @@ class int_const extends Expression {
         dump_AbstractSymbol(out, n+2, token);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_int");
-	dump_AbstractSymbol(out, n + 2, token);
-	dump_type(out, n);
+        dump_AbstractSymbol(out, n + 2, token);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method method is provided
-      * to you as an example of code generation.
-      * @param s the output stream 
-      * */
+     * to you as an example of code generation.
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
-	CgenSupport.emitLoadInt(CgenSupport.ACC,
-                                (IntSymbol)AbstractTable.inttable.lookup(token.getString()), s);
+        CgenSupport.emitLoadInt(CgenSupport.ACC,
+                (IntSymbol)AbstractTable.inttable.lookup(token.getString()), s);
     }
 
     public void code(PrintStream s, AbstractSymbol so, AbstractSymbol method, CgenClassTable cTable) {
@@ -1571,15 +1571,15 @@ class int_const extends Expression {
 
 
 /** Defines AST constructor 'bool_const'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class bool_const extends Expression {
     public Boolean val;
     /** Creates "bool_const" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for val
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for val
+     */
     public bool_const(int lineNumber, Boolean a1) {
         super(lineNumber);
         val = a1;
@@ -1592,19 +1592,19 @@ class bool_const extends Expression {
         dump_Boolean(out, n+2, val);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_bool");
-	dump_Boolean(out, n + 2, val);
-	dump_type(out, n);
+        dump_Boolean(out, n + 2, val);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method method is provided
-      * to you as an example of code generation.
-      * @param s the output stream 
-      * */
+     * to you as an example of code generation.
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
-	CgenSupport.emitLoadBool(CgenSupport.ACC, new BoolConst(val), s);
+        CgenSupport.emitLoadBool(CgenSupport.ACC, new BoolConst(val), s);
     }
 
     public void code(PrintStream s, AbstractSymbol so, AbstractSymbol method, CgenClassTable cTable) {
@@ -1614,15 +1614,15 @@ class bool_const extends Expression {
 
 
 /** Defines AST constructor 'string_const'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class string_const extends Expression {
     public AbstractSymbol token;
     /** Creates "string_const" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for token
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for token
+     */
     public string_const(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);
         token = a1;
@@ -1635,22 +1635,22 @@ class string_const extends Expression {
         dump_AbstractSymbol(out, n+2, token);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_string");
-	out.print(Utilities.pad(n + 2) + "\"");
-	Utilities.printEscapedString(out, token.getString());
-	out.println("\"");
-	dump_type(out, n);
+        out.print(Utilities.pad(n + 2) + "\"");
+        Utilities.printEscapedString(out, token.getString());
+        out.println("\"");
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method method is provided
-      * to you as an example of code generation.
-      * @param s the output stream 
-      * */
+     * to you as an example of code generation.
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
-	CgenSupport.emitLoadString(CgenSupport.ACC,
-                                   (StringSymbol)AbstractTable.stringtable.lookup(token.getString()), s);
+        CgenSupport.emitLoadString(CgenSupport.ACC,
+                (StringSymbol)AbstractTable.stringtable.lookup(token.getString()), s);
     }
 
     public void code(PrintStream s, AbstractSymbol so, AbstractSymbol method, CgenClassTable cTable) {
@@ -1660,15 +1660,15 @@ class string_const extends Expression {
 
 
 /** Defines AST constructor 'new_'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class new_ extends Expression {
     public AbstractSymbol type_name;
     /** Creates "new_" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for type_name
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for type_name
+     */
     public new_(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);
         type_name = a1;
@@ -1681,18 +1681,18 @@ class new_ extends Expression {
         dump_AbstractSymbol(out, n+2, type_name);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_new");
-	dump_AbstractSymbol(out, n + 2, type_name);
-	dump_type(out, n);
+        dump_AbstractSymbol(out, n + 2, type_name);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1718,15 +1718,15 @@ class new_ extends Expression {
 
 
 /** Defines AST constructor 'isvoid'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class isvoid extends Expression {
     public Expression e1;
     /** Creates "isvoid" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for e1
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for e1
+     */
     public isvoid(int lineNumber, Expression a1) {
         super(lineNumber);
         e1 = a1;
@@ -1739,18 +1739,18 @@ class isvoid extends Expression {
         e1.dump(out, n+2);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_isvoid");
-	e1.dump_with_types(out, n + 2);
-	dump_type(out, n);
+        e1.dump_with_types(out, n + 2);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1768,13 +1768,13 @@ class isvoid extends Expression {
 
 
 /** Defines AST constructor 'no_expr'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class no_expr extends Expression {
     /** Creates "no_expr" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     */
     public no_expr(int lineNumber) {
         super(lineNumber);
     }
@@ -1785,17 +1785,17 @@ class no_expr extends Expression {
         out.print(Utilities.pad(n) + "no_expr\n");
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_no_expr");
-	dump_type(out, n);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
 
@@ -1804,15 +1804,15 @@ class no_expr extends Expression {
 
 
 /** Defines AST constructor 'object'.
-    <p>
-    See <a href="TreeNode.html">TreeNode</a> for full documentation. */
+  <p>
+  See <a href="TreeNode.html">TreeNode</a> for full documentation. */
 class object extends Expression {
     public AbstractSymbol name;
     /** Creates "object" AST node. 
-      *
-      * @param lineNumber the line in the source file from which this node came.
-      * @param a0 initial value for name
-      */
+     *
+     * @param lineNumber the line in the source file from which this node came.
+     * @param a0 initial value for name
+     */
     public object(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);
         name = a1;
@@ -1825,18 +1825,18 @@ class object extends Expression {
         dump_AbstractSymbol(out, n+2, name);
     }
 
-    
+
     public void dump_with_types(PrintStream out, int n) {
         dump_line(out, n);
         out.println(Utilities.pad(n) + "_object");
-	dump_AbstractSymbol(out, n + 2, name);
-	dump_type(out, n);
+        dump_AbstractSymbol(out, n + 2, name);
+        dump_type(out, n);
     }
     /** Generates code for this expression.  This method is to be completed 
-      * in programming assignment 5.  (You may add or remove parameters as
-      * you wish.)
-      * @param s the output stream 
-      * */
+     * in programming assignment 5.  (You may add or remove parameters as
+     * you wish.)
+     * @param s the output stream 
+     * */
     public void code(PrintStream s) {
     }
     public void code(PrintStream s, AbstractSymbol so, AbstractSymbol method, CgenClassTable cTable) {
