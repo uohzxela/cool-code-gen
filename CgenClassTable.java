@@ -845,7 +845,12 @@ class CgenClassTable extends SymbolTable {
             attr a = attrs.get(i);
             if (a.init.get_type() != null && definedAttrs.contains(a.name)) { // only init attrs that are defined in current class
                 a.init.code(str, cls.name, null, this); // emit code for attr initializers
-                CgenSupport.emitStore(CgenSupport.ACC, CgenSupport.DEFAULT_OBJFIELDS + i, CgenSupport.SELF, str); // store init value in object on heap
+                int offset = CgenSupport.DEFAULT_OBJFIELDS + i;
+                CgenSupport.emitStore(CgenSupport.ACC, offset, CgenSupport.SELF, str); // store init value in object on heap
+                if(Flags.cgen_Memmgr != Flags.GC_NOGC) {
+                    CgenSupport.emitAddiu(CgenSupport.A1, CgenSupport.SELF, offset * CgenSupport.WORD_SIZE, str);
+                    CgenSupport.emitJal("_GenGC_Assign", str);
+                }
             }
         }
     }
