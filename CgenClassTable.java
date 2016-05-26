@@ -823,6 +823,10 @@ class CgenClassTable extends SymbolTable {
     }
     public void emitStoreAcc(String pointer, int offset) {
         CgenSupport.emitStore(CgenSupport.ACC, offset, pointer, str);
+        if(Flags.cgen_Memmgr != Flags.GC_NOGC) {
+           CgenSupport.emitAddiu(CgenSupport.A1, pointer, offset * CgenSupport.WORD_SIZE, str);
+            CgenSupport.emitJal("_GenGC_Assign", str);
+        }
     }
     public void emitLoadAcc(String pointer, int offset) {
         CgenSupport.emitLoad(CgenSupport.ACC, offset, pointer, str);
